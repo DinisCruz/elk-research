@@ -1,13 +1,10 @@
 require "docker"
 require "serverspec"
 
-
 ELK_VERSION = "6.1.2"
 ELASTICSEARCH_VERSION = ELK_VERSION
 LOGSTASH_VERSION = ELK_VERSION
 KIBANA_VERSION = ELK_VERSION
-
-
 
 describe "Dockerfile" do
   before(:all) do
@@ -21,8 +18,7 @@ describe "Dockerfile" do
 
 
 
-  ## Check OS and version
-
+  # Check version
   it "installs the right version of Ubuntu" do
     expect(os_version).to include("Ubuntu 16")
   end
@@ -34,8 +30,7 @@ describe "Dockerfile" do
 
 
 
-  ## Check that ELK stack is installed
-
+  # Check if installed
   describe file('/opt/elasticsearch/bin/elasticsearch') do
     it { should be_file }
   end
@@ -50,8 +45,7 @@ describe "Dockerfile" do
 
 
 
-  ## Check ELK stack versions
-
+  # Check ELK versions
   it "installs the right version of Elasticsearch" do
     expect(elasticsearch_version).to include("Version: #{ELASTICSEARCH_VERSION}")
   end
