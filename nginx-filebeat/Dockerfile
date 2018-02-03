@@ -1,4 +1,4 @@
-# ELK 6.2
+# ELK
 
 # Build with:
 # docker build -t filebeat-nginx-example .
@@ -7,21 +7,14 @@
 # docker run -p 80:80 -it --link <elk-container-name>:elk \
 #     --name filebeat-nginx-example filebeat-nginx-example
 
-
-
 FROM nginx
 MAINTAINER orid ahmed  https://oriddocker.blogspot.com
 ENV REFRESHED_AT 2018-01-02
 
 
-###############################################################################
-#                                INSTALLATION
-###############################################################################
-
+# INSTALLATION
 ### install Filebeat
-
 ENV FILEBEAT_VERSION 6.1.2
-
 
 RUN apt-get update -qq \
  && apt-get install -qqy curl \
@@ -32,18 +25,12 @@ RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${
  && rm filebeat-${FILEBEAT_VERSION}-amd64.deb
 
 
-###############################################################################
-#                                CONFIGURATION
-###############################################################################
-
+#  CONFIGURATION
 ### tweak nginx image set-up
-
-# remove log symlinks
 RUN rm /var/log/nginx/access.log /var/log/nginx/error.log
 
 
 ### configure Filebeat
-
 # config file
 ADD filebeat.yml /etc/filebeat/filebeat.yml
 RUN chmod 644 /etc/filebeat/filebeat.yml
@@ -52,19 +39,14 @@ RUN chmod 644 /etc/filebeat/filebeat.yml
 RUN mkdir -p /etc/pki/tls/certs
 ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 
-###############################################################################
-#                                    DATA
-###############################################################################
+# DATA
+
 
 ### add dummy HTML file
-
 COPY html /usr/share/nginx/html
 
 
-###############################################################################
-#                                    START
-###############################################################################
-
+#  START
 ADD ./start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 CMD [ "/usr/local/bin/start.sh" ]
