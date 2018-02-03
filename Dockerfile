@@ -1,27 +1,16 @@
-# ELK 6.2 for Docker
+# ELK Docker
 # Elasticsearch, Logstash, Kibana 6.1.2
-
-
 # Build with:
-# docker build -t <repo-user>/elk .
-
-
+# docker build -t 
 # Run with:
 # docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk <repo-user>/elk
-
 
 FROM phusion/baseimage
 MAINTAINER orid Ahmed https://oriddocker.blogspot.com
 ENV REFRESHED_AT 2018-01-30
 
-
-###############################################################################
-#                                INSTALLATION
-###############################################################################
-
-
+# INSTALLATION
 ### install prerequisites (cURL, gosu, JDK)
-
 ENV GOSU_VERSION 1.8
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -111,9 +100,8 @@ ADD ./kibana-init /etc/init.d/kibana
 RUN sed -i -e 's#^KIBANA_HOME=$#KIBANA_HOME='$KIBANA_HOME'#' /etc/init.d/kibana \
  && chmod +x /etc/init.d/kibana
 
-###############################################################################
-#                               CONFIGURATION
-###############################################################################
+#  CONFIGURATION
+
 
 ### configure Elasticsearch
 
@@ -160,10 +148,8 @@ ADD ./kibana.yml ${KIBANA_HOME}/config/kibana.yml
 
 
 
-###############################################################################
-#                                   START
-###############################################################################
 
+#  START
 
 ADD ./start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
