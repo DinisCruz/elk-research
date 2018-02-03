@@ -1,6 +1,3 @@
-#!/bin/bash
-
-## handle termination gracefully
 
 _term() {
   echo "Terminating ELK"
@@ -52,7 +49,7 @@ fi
 if [ "$ELASTICSEARCH_START" -ne "1" ]; then
   echo "ELASTICSEARCH_START is set to something different from 1, not starting..."
 else
-  # update permissions of ES data directory
+
   chown -R elasticsearch:elasticsearch /var/lib/elasticsearch
 
   # override ES_HEAP_SIZE variable if set
@@ -142,7 +139,7 @@ else
         > ${ES_PATH_CONF}/jvm.options.new && mv ${ES_PATH_CONF}/jvm.options.new ${ES_PATH_CONF}/jvm.options
   fi
 
-  # override LS_OPTS variable if set
+
   if [ ! -z "$LS_OPTS" ]; then
     awk -v LINE="LS_OPTS=\"$LS_OPTS\"" '{ sub(/^LS_OPTS=.*/, LINE); print; }' /etc/init.d/logstash \
         > /etc/init.d/logstash.new && mv /etc/init.d/logstash.new /etc/init.d/logstash && chmod +x /etc/init.d/logstash
@@ -209,7 +206,6 @@ if [ -x /usr/local/bin/elk-post-hooks.sh ]; then
 
   . /usr/local/bin/elk-post-hooks.sh
 fi
-
 
 touch $OUTPUT_LOGFILES
 tail -f $OUTPUT_LOGFILES &
