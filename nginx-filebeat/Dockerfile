@@ -1,12 +1,5 @@
 # ELK
 
-# Build with:
-# docker build -t filebeat-nginx-example .
-
-# Run with:
-# docker run -p 80:80 -it --link <elk-container-name>:elk \
-#     --name filebeat-nginx-example filebeat-nginx-example
-
 FROM nginx
 MAINTAINER orid ahmed  https://oriddocker.blogspot.com
 ENV REFRESHED_AT 2018-01-02
