@@ -1,7 +1,14 @@
-# docker-compose up
+# docker-compose
+
+dvwa:
+  build: PB-orid/dvwa
+  ports:
+    - "80:80"
+  links:
+    - elk
 
 elk:
-  build: PB-orid/elk
+  image: sebp/elk
   ports:
     - "5601:5601"
     - "9200:9200"
