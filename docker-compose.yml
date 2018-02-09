@@ -1,5 +1,11 @@
-# docker-compose up
-
+# docker-compose
+dvla:
+  image: your/image
+  ports:
+    - "80:80"
+  links:
+    - elk
+    
 elk:
   build: PB-orid/elk
   ports:
